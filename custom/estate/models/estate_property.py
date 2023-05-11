@@ -4,14 +4,14 @@ class EstateProperties(models.Model):
     _name = 'estate.property'
     _description = 'Real Estate Advertising properties table'
     
-    name = fields.Char(required=True)
+    name = fields.Char(required=True, string='Title')
     description = fields.Text()
     postcode = fields.Char()
     date_availability = fields.Date(copy=False, default=fields.Date.today())
     expected_price = fields.Float(required=True)
     selling_price = fields.Float(readonly=True, copy=False)
     bedrooms = fields.Integer(default=2)
-    living_area = fields.Integer()
+    living_area = fields.Integer(string='Living Area (sqm)')
     facades = fields.Integer()
     garage = fields.Boolean()
     garden = fields.Boolean()
