@@ -1,5 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from dateutil import relativedelta
 from datetime import datetime
 
@@ -63,3 +63,16 @@ class EstatePropertyOffers(models.Model):
                 record.status = 'refused'
                 
         return True
+
+    @api.model
+    def create(self, vals):
+        estate_property = self.env['estate.property'].browse(vals['property_id'])
+
+        if len(estate_property.mapped('offer_ids.price')) > 0:
+            offers = list(estate_property.mapped('offer_ids.price'))
+            offers.sort()
+            if vals['price'] < offers[-1]: # Comparando la oferta actual con la oferta de mayor precio
+                raise ValidationError(f'The offer must be higher than {offers[-1]}.')
+        else:
+            estate_property.state = 'offer_received'
+        return super().create(vals)

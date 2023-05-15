@@ -106,6 +106,11 @@ class EstateProperties(models.Model):
     @api.constrains('selling_price')
     def _check_price_not_too_lower(self):
         for record in self:
-            if not float_is_zero(record.selling_price, 3) :
+            if not float_is_zero(record.selling_price, 1) :
                 if record.selling_price < record.expected_price * 0.9:
                     raise ValidationError("The selling price must be at least 90% of the expected price! You must reduce the expected price if you want to accept this offer")
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_not_new_or_canceled(self):
+        if any(record.state not in ('new', 'canceled') for record in self):
+            raise UserError("Only new and canceled properties can be deleted.")
