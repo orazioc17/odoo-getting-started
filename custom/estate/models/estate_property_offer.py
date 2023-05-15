@@ -6,6 +6,7 @@ from datetime import datetime
 class EstatePropertyOffers(models.Model):
     _name = 'estate.property.offer'
     _description = 'Offers for properties'
+    _order = 'price desc'
     
     price = fields.Float()
     status = fields.Selection(
@@ -19,6 +20,8 @@ class EstatePropertyOffers(models.Model):
     validity = fields.Integer(default=7, string='Validity')
     date_deadline = fields.Date(compute='_date_with_validity', inverse='_inverse_date_validity', readonly=False)
     
+    property_type_id = fields.Many2one('estate.property.type', related='property_id.property_type_id')
+        
     _sql_constraints = [
         # (name, sql_definition, message)
         ('check_offer_price', 'CHECK(price >= 0)',

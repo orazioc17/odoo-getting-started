@@ -6,6 +6,7 @@ from odoo.tools.float_utils import float_compare, float_is_zero
 class EstateProperties(models.Model):
     _name = 'estate.property'
     _description = 'Real Estate Advertising properties table'
+    _order = 'id desc'
 
     name = fields.Char(required=True, string='Title')
     description = fields.Text()

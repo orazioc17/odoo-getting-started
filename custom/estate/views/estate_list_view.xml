@@ -4,14 +4,15 @@
         <field name="name">estate.property.tree</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-            <tree string="Properties">
+            <tree string="Properties" decoration-success="state in ('offer_received', 'offer_accepted')" decoration-bf="state=='offer_accepted'" decoration-muted="state=='sold'" >
                 <field name="name"/>
                 <field name="postcode"/>
                 <field name="bedrooms"/>
                 <field name="living_area"/>
                 <field name="expected_price"/>
                 <field name="selling_price"/>
-                <field name="date_availability"/>
+                <field name="date_availability" invisible="1"/>
+                <field name="state" invisible="1" />
             </tree>
         </field>
     </record>
