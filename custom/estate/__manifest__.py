@@ -18,5 +18,6 @@
         'views/estate_type_list_view.xml',
         'views/estate_tag_list_view.xml',
         'views/res_users_estate_views.xml',
+        'views/estate_kanban_view.xml',
     ]
 }
